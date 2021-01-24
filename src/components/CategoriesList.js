@@ -9,12 +9,14 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: 256,
-        marginLeft: theme.spacing(4),
-        marginTop: theme.spacing(4)
+        margin: theme.spacing(1)
     },
     media: {
-        height: 140,
+        width: '250px',
+        height: '210px'
+    },
+    h5: {
+        textTransform: 'capitalize'
     }
 }));
 
@@ -29,8 +31,8 @@ const CategoriesList = ({ url, name }) => {
                     image={url}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    {name.toUpperCase()}
+                    <Typography gutterBottom variant="h5" component="h2" className={classes.h5}>
+                    {name}
                     </Typography>
                 </CardContent>
             </CardActionArea>

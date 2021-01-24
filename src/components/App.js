@@ -10,8 +10,9 @@ import CategoriesList from './CategoriesList';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        justifyContent: "center"
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
     }
 }));
 
