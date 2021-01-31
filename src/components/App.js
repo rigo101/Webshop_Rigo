@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 
-import { useSelector, useDispatch  } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../actions/productsAction';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,7 +41,7 @@ function App() {
         <div className={classes.root}>
             { status.loading
                 ? <CircularProgress />
-                : <>{ categoryFactory(products) } </>
+                : <> { categoryFactory(products) } </>
             }
         </div>
     )

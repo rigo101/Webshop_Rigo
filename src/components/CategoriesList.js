@@ -32,7 +32,7 @@ const CategoriesList = ({ url, name }) => {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2" className={classes.h5}>
-                    {name}
+                        {name}
                     </Typography>
                 </CardContent>
             </CardActionArea>
