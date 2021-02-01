@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getProducts } from '../actions/productsAction';
+import { getProducts } from '../actions/productsActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
