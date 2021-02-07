@@ -1,9 +1,11 @@
+import { POPULATE_PRODUCTS, FETCH_FAILED } from '../constants';
+
 const statusReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'POPULATE_PRODUCTS':
+        case POPULATE_PRODUCTS:
                 return { ...state, loading: false, message: 'LOADING OK!' };
 
-        case 'FETCH_FAILED':
+        case FETCH_FAILED:
             return { ...state, loading: false, message: 'COMMUNICATION or SERVER ERROR!' };
 
         default:
