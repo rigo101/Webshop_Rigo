@@ -4,11 +4,12 @@ import statusReducer from './statusReducer';
 //TODO: use combineReducers
 
 const webshop = {
-    products:{},
-    status:{
+    products: {},
+    status: {
         loading: true,
         message: ''
-    }
+    },
+    category: null
 };
 
 const rootReducer = (state = webshop, action) => {

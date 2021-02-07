@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const CategoriesList = ({ url, name }) => {
+const GenericCard = ({ url, name, category, onClick }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} onClick={ () => onClick(category)}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
@@ -40,4 +40,4 @@ const CategoriesList = ({ url, name }) => {
     )
 }
 
-export default CategoriesList;
+export default GenericCard;
