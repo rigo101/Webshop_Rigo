@@ -31,14 +31,13 @@ function App() {
     const items = useSelector( state => state.products[state.category] );
 
     const handleClick = (categoryName) => {
-        console.log(categoryName);
         dispatch(setCategory(categoryName));
     };
 
     const categoryFactory = (products) => {
-        return Object.keys(products).map( (category, index) => {
+        return Object.keys(products).map( (category) => {
             return <GenericCard
-              key={ index }
+              key={ category }
               url = { products[category][0].image }
               name = { category }
               category = { category }
@@ -48,21 +47,26 @@ function App() {
     };
 
     const itemFactory = (items) => {
-        return items.map( (item, index) => {
-            return <GenericCard
-                key={ index }
-                url = { item.image }
-                name = { item.title }
-                category = { item.category }
-                onClick = { handleClick }
-            />
-        })
+        return items.map( (item) => {
+            return (
+                <GenericCard
+                    key={ item.id }
+                    url = { item.image }
+                    name = { item.title }
+                    category = { item.category }
+                    onClick = { handleClick }
+                />
+        )})
     };
 
     const cardFactory = () => {
         return items
             ?   <>
-                    <Button variant='contained' onClick={ handleClick } color="primary">BACK</Button>
+                    <Button
+                        variant='contained'
+                        color="primary"
+                        onClick={ handleClick }
+                    >BACK</Button>
                     { itemFactory(items) }
                 </>
             : categoryFactory(products)

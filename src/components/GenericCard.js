@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        width: '280px',
+        height: '100%',
         margin: theme.spacing(1)
     },
     media: {
@@ -16,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
         height: '210px'
     },
     h5: {
+        fontSize: '18px',
+        height: '98px',
         textTransform: 'capitalize'
     }
 }));
