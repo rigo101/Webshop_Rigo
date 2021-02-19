@@ -29,6 +29,7 @@ function App() {
     const status = useSelector( state => state.status );
     const products = useSelector( state => state.products );
     const items = useSelector( state => state.products[state.category] );
+    const categoryHeading = useSelector( state => state.category );
 
     const handleClick = (categoryName) => {
         dispatch(setCategory(categoryName));
@@ -62,6 +63,7 @@ function App() {
     const cardFactory = () => {
         return items
             ?   <>
+                    <h1>{ categoryHeading }</h1>
                     <Button
                         variant='contained'
                         color="primary"
@@ -69,14 +71,17 @@ function App() {
                     >BACK</Button>
                     { itemFactory(items) }
                 </>
-            : categoryFactory(products)
+            :   <>
+                    <h1>Categories</h1>
+                    { categoryFactory(products) }
+                </>
     };
 
     return (
         <div className={classes.root}>
             { status.loading
                 ? <CircularProgress />
-                : cardFactory()
+                :  cardFactory()
             }
         </div>
     )
