@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../actions/actions';
-import { setCategory } from '../actions/AppActions';
+import { setCategory, displayProducts, displayMain, displayItem } from '../actions/AppActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -26,16 +26,25 @@ function App() {
         dispatch(getProducts);
     }, [dispatch]);
 
-    const status = useSelector( state => state.status );
+    const activePage = useSelector( state => state.activePage );
     const products = useSelector( state => state.products );
     const items = useSelector( state => state.products[state.category] );
     const categoryHeading = useSelector( state => state.category );
 
     const handleClick = (categoryName) => {
         dispatch(setCategory(categoryName));
+        dispatch(displayProducts());
     };
-
-    const categoryFactory = (products) => {
+    const handleBackToMainClick = () => {
+        dispatch(displayMain());
+    };
+    const handleItemClick = () => {
+        dispatch(displayItem());
+    };
+    const handleBackToProductsClick = () => {
+        dispatch(displayProducts());
+    };
+    const generateMainPage = (products) => {
         return Object.keys(products).map( (category) => {
             return <GenericCard
               key={ category }
@@ -47,7 +56,7 @@ function App() {
         })
     };
 
-    const itemFactory = (items) => {
+    const productsFactory = (items) => {
         return items.map( (item) => {
             return (
                 <GenericCard
@@ -55,34 +64,52 @@ function App() {
                     url = { item.image }
                     name = { item.title }
                     category = { item.category }
-                    onClick = { handleClick }
+                    onClick = { handleItemClick }
                 />
         )})
     };
 
-    const cardFactory = () => {
-        return items
-            ?   <>
+    const mainPage = () => {
+        return (<>
+                    <h1>Categories</h1>
+                    { generateMainPage(products) }
+                </>)
+    };
+    const productsPage = () => {
+        return (<>
                     <h1>{ categoryHeading }</h1>
                     <Button
                         variant='contained'
                         color="primary"
-                        onClick={ handleClick }
+                        onClick={ handleBackToMainClick }
                     >BACK</Button>
-                    { itemFactory(items) }
-                </>
-            :   <>
-                    <h1>Categories</h1>
-                    { categoryFactory(products) }
-                </>
+                    { productsFactory(items) }
+                </>)
+    };
+    const itemPage = () => {
+        return (<>
+                    <h1>ITEM</h1>;
+                    <Button
+                        variant='contained'
+                        color="primary"
+                        onClick={ handleBackToProductsClick }
+                    >BACK</Button>
+                </>)
+    };
+
+    const pageSelector = () => {
+        switch (activePage) {
+            case 'loading': return <CircularProgress />;
+            case 'mainPage': return mainPage();
+            case 'productsPage': return productsPage();
+            case 'itemPage': return itemPage();
+            default: return <h1>Error</h1>;
+        }
     };
 
     return (
         <div className={classes.root}>
-            { status.loading
-                ? <CircularProgress />
-                :  cardFactory()
-            }
+            { pageSelector() }
         </div>
     )
 }

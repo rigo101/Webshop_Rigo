@@ -1,23 +1,20 @@
 import productsReducer from './productsReducer';
-import statusReducer from './statusReducer';
 import appReducer from './appReducer';
+import activePageReducer from './activePageReducer';
 
 //TODO: use combineReducers
 
 const webshop = {
     products: {},
-    status: {
-        loading: true,
-        message: ''
-    },
-    category: null
+    category: null,
+    activePage: 'loading' // loading, mainPage(categories), productsPage(category), itemPage(item.id)
 };
 
 const rootReducer = (state = webshop, action) => {
     return {
         products: productsReducer(state.products, action),
-        status: statusReducer(state.status, action),
-        category: appReducer(state.category, action)
+        category: appReducer(state.category, action),
+        activePage: activePageReducer(state.activePage, action)
     };
 }
 
