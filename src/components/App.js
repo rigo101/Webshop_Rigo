@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../actions/actions';
-import { setCategory, displayProducts, displayMain, displayItem } from '../actions/AppActions';
+import { setCategory, setActivePage } from '../actions/AppActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -31,48 +31,23 @@ function App() {
     const items = useSelector( state => state.products[state.category] );
     const categoryHeading = useSelector( state => state.category );
 
-    const handleClick = (categoryName) => {
+    const handleProductsClick = (categoryName) => {
         dispatch(setCategory(categoryName));
-        dispatch(displayProducts());
-    };
-    const handleBackToMainClick = () => {
-        dispatch(displayMain());
-    };
-    const handleItemClick = () => {
-        dispatch(displayItem());
-    };
-    const handleBackToProductsClick = () => {
-        dispatch(displayProducts());
-    };
-    const generateMainPage = (products) => {
-        return Object.keys(products).map( (category) => {
-            return <GenericCard
-              key={ category }
-              url = { products[category][0].image }
-              name = { category }
-              category = { category }
-              onClick = { handleClick }
-            />
-        })
-    };
-
-    const productsFactory = (items) => {
-        return items.map( (item) => {
-            return (
-                <GenericCard
-                    key={ item.id }
-                    url = { item.image }
-                    name = { item.title }
-                    category = { item.category }
-                    onClick = { handleItemClick }
-                />
-        )})
+        dispatch(setActivePage('productsPage'));
     };
 
     const mainPage = () => {
         return (<>
                     <h1>Categories</h1>
-                    { generateMainPage(products) }
+                    { Object.keys(products).map( (category) => {
+                        return <GenericCard
+                            key={ category }
+                            url = { products[category][0].image }
+                            name = { category }
+                            category = { category }
+                            onClick = { handleProductsClick }
+                        />})
+                    }
                 </>)
     };
     const productsPage = () => {
@@ -81,18 +56,28 @@ function App() {
                     <Button
                         variant='contained'
                         color="primary"
-                        onClick={ handleBackToMainClick }
+                        onClick={ () => dispatch(setActivePage('mainPage')) }
                     >BACK</Button>
-                    { productsFactory(items) }
+                    { items.map( (item) => {
+                        return (
+                            <GenericCard
+                                key={ item.id }
+                                url = { item.image }
+                                name = { item.title }
+                                category = { item.category }
+                                onClick = { () => dispatch(setActivePage('itemPage')) }
+                            />)
+                        })
+                    }
                 </>)
     };
     const itemPage = () => {
         return (<>
-                    <h1>ITEM</h1>;
+                    <h1>ITEM</h1>
                     <Button
                         variant='contained'
                         color="primary"
-                        onClick={ handleBackToProductsClick }
+                        onClick={ () => dispatch(setActivePage('productsPage')) }
                     >BACK</Button>
                 </>)
     };

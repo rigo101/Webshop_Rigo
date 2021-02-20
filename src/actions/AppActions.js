@@ -1,4 +1,4 @@
-import { SET_CATEGORY, SET_PRODUCTSPAGE, SET_MAINPAGE, SET_ITEMPAGE } from '../constants';
+import { SET_CATEGORY, SET_PAGE } from '../constants';
 
 export const setCategory = (categoryName) => {
     return (dispatch, getState) => {
@@ -6,20 +6,8 @@ export const setCategory = (categoryName) => {
     }
 };
 
-export const displayProducts = () => {
+export const setActivePage = (pageName) => {
     return (dispatch, getState) => {
-        dispatch({ type: SET_PRODUCTSPAGE });
-    }
-};
-
-export const displayMain = () => {
-    return (dispatch, getState) => {
-        dispatch({ type: SET_MAINPAGE });
-    }
-};
-
-export const displayItem = () => {
-    return (dispatch, getState) => {
-        dispatch({ type: SET_ITEMPAGE });
+        dispatch({ type: SET_PAGE, payload: pageName });
     }
 };
