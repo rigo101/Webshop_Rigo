@@ -66,9 +66,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Product = ({ image, title, description, price }) => {
+const Product = ({ image, title, description, price, category }) => {
     const classes = useStyles();
-// image, title, description, price
 
     return (
         <>
@@ -86,20 +85,20 @@ const Product = ({ image, title, description, price }) => {
             <Typography gutterBottom variant="h5" component="h2" className={classes.h5}>
                 {`Price: $${price}`}
             </Typography>
-            <FormControl className={classes.margin}>
-                <InputLabel htmlFor="demo-customized-select-native">Size</InputLabel>
-                <NativeSelect
-                    id="demo-customized-select-native"
-                    // value={age}
-                    // onChange={handleChange}
-                    input={<BootstrapInput />}
-                >
-                    <option value='S'>S</option>
-                    <option value='M'>M</option>
-                    <option value='L'>L</option>
-                    <option value='XL'>XL</option>
-                </NativeSelect>
-            </FormControl>
+            {(category ==="men clothing" || category ==="women clothing" ) &&
+                <FormControl className={classes.margin}>
+                    <InputLabel htmlFor="demo-customized-select-native">Size</InputLabel>
+                    <NativeSelect
+                        id="demo-customized-select-native"
+                        input={<BootstrapInput />}
+                    >
+                        <option value='S'>S</option>
+                        <option value='M'>M</option>
+                        <option value='L'>L</option>
+                        <option value='XL'>XL</option>
+                    </NativeSelect>
+                </FormControl>
+            }
             <FormControl className={classes.margin}>
                 <InputLabel htmlFor="quantity">Quantity</InputLabel>
                 <Input id="quantity" aria-describedby="my-helper-text" type="number" inputProps={{ min: 1, max: 15 }} />

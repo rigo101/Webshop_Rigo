@@ -91,6 +91,7 @@ function App() {
                         title={ selectedProduct.title }
                         description={ selectedProduct.description }
                         price={ selectedProduct.price }
+                        category={ selectedProduct.category }
                     />
                 </>)
     };
