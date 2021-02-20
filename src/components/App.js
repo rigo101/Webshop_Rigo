@@ -3,11 +3,12 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getProducts } from '../actions/actions';
-import { setCategory, setActivePage } from '../actions/AppActions';
+import { setCategory, setActivePage, setSelectedProductID } from '../actions/AppActions';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import GenericCard from './GenericCard';
+import Product from './Product';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +31,16 @@ function App() {
     const products = useSelector( state => state.products );
     const items = useSelector( state => state.products[state.category] );
     const categoryHeading = useSelector( state => state.category );
+    const selectedProduct = useSelector( state => state.productsByID[state.selectedProductID] );
 
     const handleProductsClick = (categoryName) => {
         dispatch(setCategory(categoryName));
         dispatch(setActivePage('productsPage'));
+    };
+
+    const handleItemClick = (categoryName, id) => {
+        dispatch(setActivePage('itemPage'));
+        dispatch(setSelectedProductID(id));
     };
 
     const mainPage = () => {
@@ -61,11 +68,12 @@ function App() {
                     { items.map( (item) => {
                         return (
                             <GenericCard
+                                id={ item.id }
                                 key={ item.id }
                                 url = { item.image }
                                 name = { item.title }
                                 category = { item.category }
-                                onClick = { () => dispatch(setActivePage('itemPage')) }
+                                onClick = { handleItemClick }
                             />)
                         })
                     }
@@ -73,12 +81,17 @@ function App() {
     };
     const itemPage = () => {
         return (<>
-                    <h1>ITEM</h1>
                     <Button
                         variant='contained'
                         color="primary"
                         onClick={ () => dispatch(setActivePage('productsPage')) }
                     >BACK</Button>
+                    <Product
+                        image={ selectedProduct.image }
+                        title={ selectedProduct.title }
+                        description={ selectedProduct.description }
+                        price={ selectedProduct.price }
+                    />
                 </>)
     };
 

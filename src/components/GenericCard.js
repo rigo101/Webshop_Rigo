@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const GenericCard = ({ url, name, category, onClick }) => {
+const GenericCard = ({ id=null, url, name, category, onClick }) => {
     const classes = useStyles();
 
     return (
-        <Card className={classes.root} onClick={ () => onClick(category)}>
+        <Card className={classes.root} onClick={ () => onClick(category, id)}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
