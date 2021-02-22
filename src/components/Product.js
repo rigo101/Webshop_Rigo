@@ -89,7 +89,7 @@ const Product = ({ image, title, description, price, category }) => {
         <div className={classes.root}>
             <div className={classes.header}>
                 <CardMedia
-                    className={ classes.media }
+                    className={classes.media}
                     image={ image }
                     title="Item"
                 />

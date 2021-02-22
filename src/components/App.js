@@ -1,14 +1,14 @@
 import React from 'react';
 import { useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
+
 import { getProducts } from '../actions/actions';
 import { setCategory, setActivePage, setSelectedProductID } from '../actions/AppActions';
+import GenericCard from './GenericCard';
+import Product from './Product';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import GenericCard from './GenericCard';
-import Product from './Product';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
