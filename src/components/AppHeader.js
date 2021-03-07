@@ -9,7 +9,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from '@material-ui/icons/Search';
 
 import { useSelector, useDispatch  } from 'react-redux';
-import { setActivePage, setSearchTerm } from '../actions/AppActions';
+import { setActivePage, setSearchTerm, setSelectedProductID, setCategory } from '../actions/AppActions';
 
 const useStyles = makeStyles((theme) => ({
     Proot: { flexGrow: 1 },
@@ -74,9 +74,15 @@ export const AppHeader = () => {
                 <IconButton
                     edge="start"
                     className={classes.menuButton}
-                    onClick={ () => dispatch(setActivePage('mainPage')) }
                     color="inherit"
                     aria-label="open drawer"
+                    onClick={ () => {
+                            dispatch(setSearchTerm(''));
+                            dispatch(setActivePage('mainPage'));
+                            dispatch(setSelectedProductID(null));
+                            dispatch(setCategory(null));
+                        }
+                    }
                 >
                     <HomeIcon />
                 </IconButton>
