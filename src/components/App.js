@@ -7,6 +7,7 @@ import { setCategory, setActivePage, setSelectedProductID } from '../actions/App
 import GenericCard from './GenericCard';
 import Product from './Product';
 import { AppHeader } from './AppHeader';
+import { SearchOverlay } from './SearchOverlay';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -111,6 +112,7 @@ function App() {
 
     return (<>
                 <AppHeader />
+                <SearchOverlay />
                 {pageSelector()}
             </>)
 }

@@ -1,4 +1,4 @@
-import { SET_CATEGORY, SET_PAGE, SET_SELECTED_PRODUCT } from '../constants';
+import { SET_CATEGORY, SET_PAGE, SET_SELECTED_PRODUCT, UPDATE_SEARCH_TERM } from '../constants';
 
 export const setCategory = (categoryName) => {
     return (dispatch, getState) => {
@@ -15,5 +15,11 @@ export const setActivePage = (pageName) => {
 export const setSelectedProductID = (productID) => {
     return (dispatch, getState) => {
         dispatch({ type: SET_SELECTED_PRODUCT, payload: productID });
+    }
+};
+
+export const setSearchTerm = (newSearchTerm) => {
+    return (dispatch, getState) => {
+        dispatch({ type: UPDATE_SEARCH_TERM, payload: newSearchTerm });
     }
 };

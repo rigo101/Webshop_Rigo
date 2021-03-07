@@ -8,8 +8,8 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from '@material-ui/icons/Search';
 
-import { useDispatch  } from 'react-redux';
-import { setActivePage } from '../actions/AppActions';
+import { useSelector, useDispatch  } from 'react-redux';
+import { setActivePage, setSearchTerm } from '../actions/AppActions';
 
 const useStyles = makeStyles((theme) => ({
     Proot: { flexGrow: 1 },
@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 export const AppHeader = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const searchTerm = useSelector( state => state.searchTerm );
 
     return (
         <div className={classes.root}>
@@ -92,7 +93,9 @@ export const AppHeader = () => {
                             root: classes.inputRoot,
                             input: classes.inputInput,
                         }}
-                    inputProps={{ "aria-label": "search" }}
+                        inputProps={{ "aria-label": "search" }}
+                        value = { searchTerm }
+                        onChange = { (event) => dispatch(setSearchTerm(event.target.value)) }
                     />
                 </div>
             </Toolbar>
