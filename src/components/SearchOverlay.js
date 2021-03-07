@@ -1,23 +1,21 @@
 import React from 'react';
 import { useSelector, useDispatch  } from 'react-redux';
-import { setSearchTerm } from '../actions/AppActions';
-
-import Typography from '@material-ui/core/Typography';
 
 import GenericCard from './GenericCard';
-// import { setCategory, setActivePage } from '../actions/AppActions';
+import { setSearchTerm, setActivePage, setSelectedProductID } from '../actions/AppActions';
 
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     overlay: {
         position: 'absolute',
         width: '100%',
-        height: 'calc(100vh - 64px)',
+        height: 'calc(100vh + 120px)',
         textAlign: 'right',
         backgroundColor: '#dadada',
         zIndex: 1500,
-        color: '#fff',
+        color: '#2f3538'
     },
     hideOverlay: {
         display: 'none'
@@ -39,9 +37,9 @@ export const SearchOverlay = () => {
 
     const searchResult = useSelector( state =>
         searchTerm.length > 2 && Object.values(state.productsByID).filter( product => {
-            return  product.title.includes(searchTerm) ||
-                    product.description.includes(searchTerm) ||
-                    product.category.includes(searchTerm);
+            return  product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    product.category.toLowerCase().includes(searchTerm.toLowerCase());
         }
     ));
 
@@ -59,7 +57,12 @@ export const SearchOverlay = () => {
                                     url = { item.image }
                                     name = { item.title }
                                     category = { item.category }
-                                    onClick = { () => console.log('Not yet!')}
+                                    onClick = { () => {
+                                            dispatch(setSearchTerm(''));
+                                            dispatch(setSelectedProductID(item.id));
+                                            dispatch(setActivePage('itemPage'));
+                                        }
+                                    }
                                 />)
                             })
                     }
