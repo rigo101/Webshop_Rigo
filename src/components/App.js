@@ -6,10 +6,10 @@ import { getProducts } from '../actions/actions';
 import { setCategory, setActivePage, setSelectedProductID } from '../actions/AppActions';
 import GenericCard from './GenericCard';
 import Product from './Product';
+import { AppHeader } from './AppHeader';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,11 +68,6 @@ function App() {
     };
     const productsPage = () => {
         return (<>
-                    <Button
-                        variant='contained'
-                        color="primary"
-                        onClick={ () => dispatch(setActivePage('mainPage')) }
-                    >BACK</Button>
                     <h1 className={classes.h1}>{ categoryHeading }</h1>
                     <div className={classes.root}>
                         { items.map( (item) => {
@@ -92,11 +87,6 @@ function App() {
     };
     const itemPage = () => {
         return (<>
-                    <Button
-                        variant='contained'
-                        color="primary"
-                        onClick={ () => dispatch(setActivePage('productsPage')) }
-                    >BACK</Button>
                     <div className={classes.root}>
                         <Product
                             image={ selectedProduct.image }
@@ -111,7 +101,7 @@ function App() {
 
     const pageSelector = () => {
         switch (activePage) {
-            case 'loading': return <CircularProgress />;
+            case 'loading': return <div className={classes.root}><CircularProgress /></div>;
             case 'mainPage': return mainPage();
             case 'productsPage': return productsPage();
             case 'itemPage': return itemPage();
@@ -119,7 +109,10 @@ function App() {
         }
     };
 
-    return pageSelector();
+    return (<>
+                <AppHeader />
+                {pageSelector()}
+            </>)
 }
 
 export default App;
