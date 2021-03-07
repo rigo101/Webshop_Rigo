@@ -4,7 +4,7 @@ import { setSearchTerm } from '../actions/AppActions';
 
 import Typography from '@material-ui/core/Typography';
 
-// import GenericCard from './GenericCard';
+import GenericCard from './GenericCard';
 // import { setCategory, setActivePage } from '../actions/AppActions';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,16 +15,20 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         height: 'calc(100vh - 64px)',
         textAlign: 'right',
-        opacity: '95%',
-        backgroundColor: 'grey',
+        backgroundColor: '#dadada',
         zIndex: 1500,
         color: '#fff',
     },
-    hideOverlay:{
+    hideOverlay: {
         display: 'none'
     },
     clear: {
         padding: '16px',
+    },
+    searchResults: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
     }
 }));
 
@@ -33,9 +37,32 @@ export const SearchOverlay = () => {
     const searchTerm = useSelector( state => state.searchTerm );
     const dispatch = useDispatch();
 
+    const searchResult = useSelector( state =>
+        searchTerm.length > 2 && Object.values(state.productsByID).filter( product => {
+            return  product.title.includes(searchTerm) ||
+                    product.description.includes(searchTerm) ||
+                    product.category.includes(searchTerm);
+        }
+    ));
+
     return (<div className={`${classes.overlay} ${searchTerm || classes.hideOverlay}`}>
                 <Typography className={classes.clear} noWrap onClick={() => dispatch(setSearchTerm(''))}>
                     CLEAR SEARCH FIELD
                 </Typography>
+                <div className={ classes.searchResults }>
+                    { searchResult &&
+                        searchResult.map( (item) => {
+                            return (
+                                <GenericCard
+                                    id={ item.id }
+                                    key={ item.id }
+                                    url = { item.image }
+                                    name = { item.title }
+                                    category = { item.category }
+                                    onClick = { () => console.log('Not yet!')}
+                                />)
+                            })
+                    }
+                </div>
             </div>)
 };
