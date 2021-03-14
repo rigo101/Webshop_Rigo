@@ -14,6 +14,10 @@ import { green, grey } from '@material-ui/core/colors';
 import { useDispatch  } from 'react-redux';
 import { addToCart } from '../actions/AppActions';
 
+
+const MIN_QTY = 1;
+const MAX_QTY = 16;
+
 const BootstrapInput = withStyles((theme) => ({
     root: {
         'label + &': {
@@ -96,6 +100,12 @@ const Product = ({ id, image, title, description, price, category }) => {
 
     const needsSize = (category ==="men clothing" || category ==="women clothing" );
     const [size, setSize] = useState( needsSize ? 'S' : undefined );
+
+    const handleOnQtyChange = (event) => {
+        const input = parseInt(event.target.value);
+        setQty(input <= MIN_QTY ? MIN_QTY : input >= MAX_QTY ? MAX_QTY : input);
+    };
+
     return (
         <div className={classes.root}>
             <div className={classes.header}>
@@ -134,9 +144,9 @@ const Product = ({ id, image, title, description, price, category }) => {
                                 className={classes.quantity}
                                 aria-describedby="my-helper-text"
                                 type="number"
-                                inputProps={{ min: 1, max: 15 }}
+                                inputProps={{ min: MIN_QTY, max: MAX_QTY }}
                                 value={qty}
-                                onChange={ (event) => setQty(parseInt(event.target.value)) }
+                                onChange={ handleOnQtyChange }
                             />
                         </FormControl>
                     </div>
