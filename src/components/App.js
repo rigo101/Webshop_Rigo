@@ -99,6 +99,7 @@ function App() {
         return (<>
                     <div className={classes.root}>
                         <Product
+                            id={ selectedProduct.id }
                             image={ selectedProduct.image }
                             title={ selectedProduct.title }
                             description={ selectedProduct.description }

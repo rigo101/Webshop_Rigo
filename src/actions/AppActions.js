@@ -1,4 +1,10 @@
-import { SET_CATEGORY, SET_PAGE, SET_SELECTED_PRODUCT, UPDATE_SEARCH_TERM } from '../constants';
+import {
+    ADD_PRODUCT,
+    SET_CATEGORY,
+    SET_PAGE,
+    SET_SELECTED_PRODUCT,
+    UPDATE_SEARCH_TERM
+} from '../constants';
 
 export const setCategory = (categoryName) => {
     return (dispatch, getState) => {
@@ -21,5 +27,11 @@ export const setSelectedProductID = (productID) => {
 export const setSearchTerm = (newSearchTerm) => {
     return (dispatch, getState) => {
         dispatch({ type: UPDATE_SEARCH_TERM, payload: newSearchTerm });
+    }
+};
+
+export const addToCart = (productToBuy) => {
+    return (dispatch, getState) => {
+        dispatch({ type: ADD_PRODUCT, payload: productToBuy });
     }
 };

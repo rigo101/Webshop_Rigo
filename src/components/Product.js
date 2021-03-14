@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles, withStyles  } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +10,8 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 
+import { useDispatch  } from 'react-redux';
+import { addToCart } from '../actions/AppActions';
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
@@ -84,9 +86,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Product = ({ image, title, description, price, category }) => {
+const Product = ({ id, image, title, description, price, category }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const [qty, setQty] = useState(1);
 
+    const needsSize = (category ==="men clothing" || category ==="women clothing" );
+    const [size, setSize] = useState( needsSize ? 'S' : undefined );
     return (
         <div className={classes.root}>
             <div className={classes.header}>
@@ -103,12 +109,13 @@ const Product = ({ image, title, description, price, category }) => {
                         {`Price: $${price}`}
                     </Typography>
                     <div>
-                        {(category ==="men clothing" || category ==="women clothing" ) &&
+                        { needsSize &&
                             <FormControl className={classes.marginRight}>
                                 <InputLabel htmlFor="demo-customized-select-native">Size</InputLabel>
                                 <NativeSelect
                                     id="demo-customized-select-native"
                                     input={<BootstrapInput />}
+                                    onChange={ (event) => setSize(event.target.value) }
                                 >
                                     <option value='S'>S</option>
                                     <option value='M'>M</option>
@@ -119,10 +126,23 @@ const Product = ({ image, title, description, price, category }) => {
                         }
                         <FormControl className={classes.marginRight}>
                             <InputLabel htmlFor="quantity">Quantity</InputLabel>
-                            <Input id="quantity" aria-describedby="my-helper-text" type="number" inputProps={{ min: 1, max: 15 }} />
+                            <Input
+                                id="quantity"
+                                aria-describedby="my-helper-text"
+                                type="number"
+                                inputProps={{ min: 1, max: 15 }}
+                                value={qty}
+                                onChange={ (event) => setQty(parseInt(event.target.value)) }
+                            />
                         </FormControl>
                     </div>
-                    <Button variant='contained' color='secondary' className={classes.marginTop}>Add to cart</Button>
+                    <Button
+                        variant='contained'
+                        color='secondary'
+                        className={classes.marginTop}
+                        onClick={() => dispatch(addToCart({id, qty, size}))}>
+                        Add to cart
+                    </Button>
                 </div>
             </div>
             <Typography gutterBottom variant="h5" component="h2" className={classes.description}>
