@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '40px',
         color: '#8d8881',
         margin: 0,
-        paddingTop: '76px',
+        paddingTop: '12px',
         paddingBottom: '32px'
     }
 }));

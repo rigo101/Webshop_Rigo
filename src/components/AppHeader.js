@@ -69,6 +69,7 @@ export const AppHeader = ({ toggleCart }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const searchTerm = useSelector( state => state.searchTerm );
+    const cartEmpty = useSelector( state => Object.keys(state.cart).length === 0 );
 
     return (
         <div className={classes.root}>
@@ -113,8 +114,10 @@ export const AppHeader = ({ toggleCart }) => {
                     color="inherit"
                     aria-label="open drawer"
                 >
-                    <EmptyCartIcon />
-                    {/* <FilledCartIcon /> */}
+                    { cartEmpty
+                        ? <EmptyCartIcon />
+                        : <FilledCartIcon />
+                    }
                 </IconButton>
             </Toolbar>
         </AppBar>

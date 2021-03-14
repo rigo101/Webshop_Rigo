@@ -1,5 +1,6 @@
 import {
     ADD_PRODUCT,
+    REMOVE_PRODUCT,
     SET_CATEGORY,
     SET_PAGE,
     SET_SELECTED_PRODUCT,
@@ -33,5 +34,11 @@ export const setSearchTerm = (newSearchTerm) => {
 export const addToCart = (productToBuy) => {
     return (dispatch, getState) => {
         dispatch({ type: ADD_PRODUCT, payload: productToBuy });
+    }
+};
+
+export const removeFromCart = (cartItemID) => {
+    return (dispatch, getState) => {
+        dispatch({ type: REMOVE_PRODUCT, payload: cartItemID });
     }
 };
