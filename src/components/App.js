@@ -11,6 +11,7 @@ import { SearchOverlay } from './SearchOverlay';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CartDrawer from './CartDrawer';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
 function App() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [cartOpen, setCartOpen] = React.useState(false);
+
+    const handleCartClick = () =>{
+        setCartOpen(cartOpen => !cartOpen);
+    };
 
     useEffect(() => {
         dispatch(getProducts);
@@ -114,7 +120,8 @@ function App() {
     };
 
     return (<>
-                <AppHeader />
+                <AppHeader toggleCart={ handleCartClick }/>
+                <CartDrawer open={ cartOpen }/>
                 <SearchOverlay />
                 {pageSelector()}
             </>)

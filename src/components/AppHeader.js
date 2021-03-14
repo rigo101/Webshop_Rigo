@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -65,15 +65,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const AppHeader = () => {
+export const AppHeader = ({ toggleCart }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const searchTerm = useSelector( state => state.searchTerm );
-    const [cartOpen, setCartOpen] = useState(false);
-
-    const handleCartClick = () =>{
-        setCartOpen(cartOpen => !cartOpen);
-    };
 
     return (
         <div className={classes.root}>
@@ -114,14 +109,12 @@ export const AppHeader = () => {
                 <IconButton
                     edge="start"
                     className={classes.cartButton}
-                    onClick={ handleCartClick }
+                    onClick={ toggleCart  }
                     color="inherit"
                     aria-label="open drawer"
                 >
-                    { cartOpen
-                        ? <FilledCartIcon />
-                        : <EmptyCartIcon />
-                    }
+                    <EmptyCartIcon />
+                    {/* <FilledCartIcon /> */}
                 </IconButton>
             </Toolbar>
         </AppBar>
