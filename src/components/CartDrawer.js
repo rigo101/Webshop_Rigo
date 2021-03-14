@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
-        paddingTop: 80
+        paddingTop: 64
     },
     drawer: {
         width: drawerWidth,

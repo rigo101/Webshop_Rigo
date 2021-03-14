@@ -16,7 +16,6 @@ import { addToCart } from '../actions/AppActions';
 
 const BootstrapInput = withStyles((theme) => ({
     root: {
-        // margin: theme.spacing(2),
         'label + &': {
             marginTop: theme.spacing(3),
         },
@@ -84,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
     },
     marginTop: {
         marginTop: theme.spacing(2),
+    },
+    quantity : {
+        padding: '9px 0 7px'
     }
 }));
 
@@ -129,6 +131,7 @@ const Product = ({ id, image, title, description, price, category }) => {
                             <InputLabel htmlFor="quantity">Quantity</InputLabel>
                             <Input
                                 id="quantity"
+                                className={classes.quantity}
                                 aria-describedby="my-helper-text"
                                 type="number"
                                 inputProps={{ min: 1, max: 15 }}
