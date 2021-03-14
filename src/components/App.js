@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         fontWeight: '400',
         fontSize: '40px',
-        color: '#8d8881'
+        color: '#8d8881',
+        margin: 0,
+        paddingTop: '76px',
+        paddingBottom: '32px'
     }
 }));
 
