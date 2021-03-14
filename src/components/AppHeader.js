@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +7,8 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from '@material-ui/icons/Search';
+import FilledCartIcon from '@material-ui/icons/ShoppingCart';
+import EmptyCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 
 import { useSelector, useDispatch  } from 'react-redux';
 import { setActivePage, setSearchTerm, setSelectedProductID, setCategory } from '../actions/AppActions';
@@ -14,6 +16,7 @@ import { setActivePage, setSearchTerm, setSelectedProductID, setCategory } from 
 const useStyles = makeStyles((theme) => ({
     Proot: { flexGrow: 1 },
     menuButton: {   marginRight: theme.spacing(2) },
+    cartButton: {   marginLeft: theme.spacing(2) },
     title: {
         flexGrow: 1,
         display: "none",
@@ -66,6 +69,11 @@ export const AppHeader = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const searchTerm = useSelector( state => state.searchTerm );
+    const [cartOpen, setCartOpen] = useState(false);
+
+    const handleCartClick = () =>{
+        setCartOpen(cartOpen => !cartOpen);
+    };
 
     return (
         <div className={classes.root}>
@@ -101,9 +109,20 @@ export const AppHeader = () => {
                         }}
                         inputProps={{ "aria-label": "search" }}
                         value = { searchTerm }
-                        onChange = { (event) => dispatch(setSearchTerm(event.target.value)) }
-                    />
+                        onChange = { (event) => dispatch(setSearchTerm(event.target.value)) }                    />
                 </div>
+                <IconButton
+                    edge="start"
+                    className={classes.cartButton}
+                    onClick={ handleCartClick }
+                    color="inherit"
+                    aria-label="open drawer"
+                >
+                    { cartOpen
+                        ? <FilledCartIcon />
+                        : <EmptyCartIcon />
+                    }
+                </IconButton>
             </Toolbar>
         </AppBar>
     </div>
