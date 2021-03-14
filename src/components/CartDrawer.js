@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { useSelector, useDispatch  } from 'react-redux';
-import { removeFromCart } from '../actions/AppActions';
+import { setActivePage, setSelectedProductID, removeFromCart } from '../actions/AppActions';
 
 const drawerWidth = 320;
 
@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2)
     },
     icon: {
-        fontSize: 26
+        fontSize: 26,
+        color: '#c55555'
     }
 }));
 
@@ -47,6 +48,22 @@ const CartDrawer = ({open}) => {
     const dispatch = useDispatch();
     const cartArray = useSelector( state => Object.entries(state.cart));
     const productsByID = useSelector( state => state.productsByID);
+
+    const handleOnClick = (event) => {
+        let element = event.target;
+        let remove = false;
+        while (element.nodeName !== 'LI') {
+            if (element.nodeName === 'BUTTON') remove = true;
+            element = element.parentNode;
+        }
+        const cartItemID = element.id;
+        if (remove) {
+            dispatch(removeFromCart(cartItemID));
+        } else {
+            dispatch(setSelectedProductID(cartItemID.substr(0, cartItemID.indexOf('_'))));
+            dispatch(setActivePage('itemPage'));
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -60,35 +77,33 @@ const CartDrawer = ({open}) => {
                 paper: classes.drawerPaper,
                 }}
             >
-            <List className={classes.root}>
-                { cartArray.map(([key, value]) => {
-                    const id = (key.substr(0, key.indexOf('_')));
-                    const product = productsByID[id];
-                    const size = key.substr(key.indexOf('_')+1);
-                    const details = size === 'undefined'
-                                        ? `Quantity: ${value}`
-                                        : `Quantity: ${value}\u00A0\u00A0\u00A0\u00A0Size: ${size}`;
-                    return (
-                        <ListItem key={ key }>
-                            <ListItemAvatar>
-                                <Avatar alt="Product" src={ product.image } className={classes.large}/>
-                            </ListItemAvatar>
-                            <ListItemText primary={ product.title } secondary={ details } />
+                <List className={classes.root} onClick={ handleOnClick }>
+                    { cartArray.map(([key, value]) => {
+                        const id = key.substr(0, key.indexOf('_'));
+                        const product = productsByID[id];
+                        const size = key.substr(key.indexOf('_')+1);
+                        const details = size === 'undefined'
+                                            ? `Quantity: ${value}`
+                                            : `Quantity: ${value}\u00A0\u00A0\u00A0\u00A0Size: ${size}`;
+                        return (
+                            <ListItem key={ key } id={ key }>
+                                <ListItemAvatar>
+                                    <Avatar alt="Product" src={ product.image } className={classes.large}/>
+                                </ListItemAvatar>
+                                <ListItemText primary={ product.title } secondary={ details } />
                                 <IconButton
                                     edge="start"
                                     style={ {padding: 0} }
-                                    color="secondary"
                                     aria-label="Remove from cart"
-                                    onClick={ () => dispatch(removeFromCart(key)) }
                                 >
                                     <DeleteIcon className={classes.icon}/>
                                 </IconButton>
                             </ListItem>)
-                    })
-                }
-            </List>
-          </Drawer>
-      </div>
+                        })
+                    }
+                </List>
+            </Drawer>
+        </div>
   );
 }
 
